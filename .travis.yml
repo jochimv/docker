@@ -1,0 +1,15 @@
+language: generic 
+#tell travis we need superuser permissions
+sudo: required
+
+
+services:
+  #hey travis we need a copy of docker ready to go
+    - docker
+
+before_install:
+    - docker build -t vaclavjochim/docker -f Dockerfile.dev .
+
+script:
+  #what needs to be executed to run the tests, the -e CI=true specifies to display just the results of the test. Normally, it gives options to press button, but since travis CI cant press any, this will make this test to be skipped.
+  - docker run -e CI=true vaclavjochim/docker npm run test

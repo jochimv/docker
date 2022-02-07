@@ -17,3 +17,12 @@ services:
       - /app/node_modules
       #map this folder to container /app folder, and listen for changes in code 
       - .:/app
+  tests:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ['npm', 'run', 'test']
