@@ -7,4 +7,6 @@ RUN npm run build
 
 
 FROM nginx
+#elastic will expose this container port 
+EXPOSE 80
 COPY --from=builder /app/build /usr/share/nginx/html
