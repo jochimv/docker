@@ -1,28 +1,8 @@
 version: '3'
 services:
   web:
-    #these two are there for windows debugging purposes I think
-    stdin_open: true
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    #build this container from current folder and file Dockerfile.dev
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
-      - '3000:3000'
-      #volumes are needed for reflection changes 
-    volumes:
-      #following line means do not try to map /app/node_modules - the node_modules (dependencies) were installed with npm install in Dockerfile.dev
-      - /app/node_modules
-      #map this folder to container /app folder, and listen for changes in code 
-      - .:/app
-  tests:
-    stdin_open: true
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    volumes:
-      - /app/node_modules
-      - .:/app
-    command: ['npm', 'run', 'test']
+      - '80:80'

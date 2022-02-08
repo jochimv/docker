@@ -13,3 +13,22 @@ before_install:
 script:
   #what needs to be executed to run the tests, the -e CI=true specifies to display just the results of the test. Normally, it gives options to press button, but since travis CI cant press any, this will make this test to be skipped.
   - docker run -e CI=true vaclavjochim/docker npm run test
+
+#deploying to AWS
+deploy:
+  provider: elasticbeanstalk
+  #the part of the URL from the dashboard Dockerreact-env.eba-zis3akpq.us-east-1.elasticbeanstalk.com
+  region: "us-east-1"
+  #application name from the dashboard
+  app: "docker-react"
+  env: "Dockerreact-env"
+  bucket_name: "elasticbeanstalk-us-east-1-893489803640"
+  #the same as the app, if this is your first AWS app
+  bucket_path: "docker-react"
+  #deploy the app only if master branch gets update
+  on:
+    branch: master
+
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"  
